@@ -3,12 +3,129 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1 id="header">Etch-a-Sketch!</h1><br>
 
-<div id="grid"></div>
+<div id="grid">
+</div>
+
+<form>
+    <br><label for="columns" id="columnsL">Number of Columns: </label>
+    <input type="text" id="columns" name="columns" size="2" maxlength="2"><br>
+    <label for="rows" id="rowsL">Number of Rows: </label>
+    <input type="text" id="rows" name="rows" size="2" maxlength="2"><br><br>
+    <button id="btn" type="button">Submit</button>
+    <button id="reset" >Reset</button>
+</form>
 
 
 
 
 
 
+<!-- beginning of Javascript code-->
+<script>
+
+//init variables
+const grid = document.getElementById('grid')
+const block = document.createElement('div')
+const gridBlock = document.getElementsByClassName('gridbox')
+let textColumns = document.getElementById('columns')
+let textRows = document.getElementById('rows')
+const btn = document.getElementById('btn')
+let numColumns = 16
+let numRows = 16
+let randomColor = random_bg_color()
+
+//btn.addEventListener("click", changeGrid)
+
+btn.addEventListener('click', updateGrid)
+
+
+//update grid function
+function updateGrid(){
+    numC = textColumns.value
+    numR = textRows.value
+    num = numC * numR
+    grid.innerHTML = ''
+    for (i=0; i<num; i++){
+    let block = document.createElement('div')
+    block.className= 'gridbox'
+    grid.appendChild(block)
+    }
+    
+    grid.style.gridTemplateColumns = "repeat(" + numC + ", 1fr)"
+    grid.style.gridTemplateRows = "repeat(" + numR + ", 1fr)"
+    mouseHover()
+    
+}
+
+//add class to div
+block.className= 'gridbox'
+block.id= 'gridbox'
+
+
+//adding styles to gridbox through js
+
+//for loop to create blocks default
+
+function defaultBlocks(){
+    for (i=0; i<256; i++){
+    let block = document.createElement('div')
+    block.className= 'gridbox'
+    grid.appendChild(block)
+
+    grid.style.gridTemplateColumns = "repeat(" + numColumns + ", 1fr)"
+    grid.style.gridTemplateRows = "repeat(" + numRows + ", 1fr)"
+    }
+}
+
+//for loop to careate block after function updateGrid invoked
+
+function createBlock(n){
+    for (i=0; i<n; i++){
+    let block = document.createElement('div')
+    block.className= 'gridbox'
+    grid.appendChild(block)
+    }
+ 
+}
+
+//create random rgb values
+function random_bg_color() {
+    let x = Math.floor(Math.random() * 256);
+    let y = Math.floor(Math.random() * 256);
+    let z = Math.floor(Math.random() * 256);
+    let bgColor = "rgb(" + x + "," + y + "," + z + ")"; 
+    return bgColor
+    }
+
+
+//generate new random color for each mouseover
+function changeColorF(){
+for (i=0; i<1; i++){
+    random_bg_color()
+    console.log(random_bg_color())
+    return random_bg_color()
+}
+}
+
+//mouseover highlight
+function mouseHover(){
+for (i=0; i<gridBlock.length; i++){
+    gridBlock[i].addEventListener("mouseover", changeColor)
+    gridBlock[i].addEventListener("mouseover", changeColorF)
+}
+
+
+//changeColor function
+function changeColor(e){
+    e.target.style.backgroundColor = changeColorF()
+}
+}
+
+
+defaultBlocks()
+mouseHover()
+
+</script>
 </body>
